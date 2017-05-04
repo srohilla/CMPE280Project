@@ -1,10 +1,24 @@
-# CMPE280Project
-Repository For CMPE 280 Project
+# news-visualization
+Watson Discovery News Visualization
 
-Garvis -Graph Jarvis is your personal data driven visual assistant. You don't even have to give him data to produce great
-results. He keeps on gathering data using his own intelligent NLP, ML and Data mining models.
+A [D3.js](https://d3js.org/) visualization using the pre-enriched news content avaialable as part of the [Watson Discovery Service](https://www.ibm.com/watson/developercloud/discovery.html)
 
-You can give him queries in Natural languages and he will give you relevant and cool graphs for better understanding of the problem.
+To get started, provision an instance of Discovery on [Bluemix](https://console.ng.bluemix.net/)
 
-He is improving on daily basis. And can't wait to start talking with you through it's bot version. So he can keep you engaged as well as
-keep improving it's engine to solve your problems.
+Clone this repo and navigate to the news-visualization directory:
+```
+git clone https://github.com/zwalchuk/news-visualization.git
+cd news-visualization
+```
+Gather your username, password, environment_id, and collection_id and store them as environment variables:
+```
+export USERNAME = '<username>'
+export PASSWORD = '<password>'
+export ENVIRONMENT_ID = '<environment_id>'
+export COLLECTION_ID = '<collection_id>'
+```
+Launch the app:
+```
+python newsApp.py
+```
+

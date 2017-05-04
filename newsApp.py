@@ -38,7 +38,6 @@ def newHeadlines():
         get_url = endpoint+"query=title:("+combo+")|enrichedTitle.entities.text:("+combo+")&count=50&return=title,url"
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
-
     
         for article in response['results']:
             combos[:]=[]
@@ -172,8 +171,9 @@ def news_page(keyword):
         get_url = endpoint+"query=title:("+keyword+")|enrichedTitle.entities.text:("+keyword+")&count=50&return=title,url"
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
-    
+        print response
         for article in response['results']:
+            print article['url']
             headlines[1][keyword][article['title']]=article['url'] 
             
 
@@ -206,6 +206,52 @@ def news_page(keyword):
             count+=1
                    
     return render_template('cloud.html', nodes=json.dumps(nodes), links=json.dumps(links), bigWords=json.dumps(bigWords), headlines=json.dumps(headlines))
+
+
+
+
+
+@app.route('/test/<keyword>')
+def sankee_test(keyword):
+    index=0 
+    headlines={}
+    headlines[1]={}
+    positiveHeadlines={}
+    positiveHeadlines[1]={}
+    positiveHeadlines[1][keyword]={}
+    negativeHeadlines={}
+    negativeHeadlines[1]={}
+    
+    negativeHeadlines[1][keyword]={}
+
+    bigWords={}
+    
+    try:
+        get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:positive&count=50"
+        results = requests.get(url=get_url, auth=(username, password)) 
+        response = results.json()
+        print response
+        for article in response['results']:
+           # positiveLinks[1] = article['url']
+            print article['title']
+            positiveHeadlines[1][keyword][article['title']]=article['url']   
+
+
+        get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:negative&count=50"
+        results = requests.get(url=get_url, auth=(username, password)) 
+        response = results.json()
+        print response
+        for article in response['results']:
+       #     negativeLinks[1] = article['url']
+            print article['title']     
+            negativeHeadlines[1][keyword][article['title']]=article['url'] 
+
+            
+
+    except Exception as e:
+        print e
+
+    return render_template('test.html', key= keyword, negativeLinks=json.dumps(negativeHeadlines), positiveLinks=json.dumps(positiveHeadlines))
 
 port = os.getenv('VCAP_APP_PORT', '8000')
 
