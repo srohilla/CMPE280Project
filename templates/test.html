@@ -7,20 +7,28 @@
       
       function drawChart() {
         var key ='{{key}}';
-        var headlines = {{ positiveLinks|safe }};
+        var positiveWords = {{ positiveLinks|safe }};
+        var negativeWords = {{ negativeLinks|safe }};
+        var positiveCount={{positiveResultSet}};
+        var negativeCount={{negativeResultSet}};
+       
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'From');
         data.addColumn('string', 'To');
         data.addColumn('number', 'Weight');
         data.addRows([
-          [ key, 'Positive',300],
-          [ key, 'Negative',200],
-          [ 'Negative', 'crazy',9],
-          [ 'Positive', 'wise',78],
-          [ 'Negative', 'stupid',27],
-          [ 'Positive', 'hot',67],
-          [ 'Negative', 'chutiya',23],
-          [ 'Positive', 'awesome',22]
+          [ key, 'Positive',positiveCount],
+          [ key, 'Negative',negativeCount],
+          [ 'Negative', negativeWords[0],20000],
+          [ 'Negative', negativeWords[1],20000],
+          [ 'Negative', negativeWords[2],20000],
+          [ 'Negative', negativeWords[3],20000],
+          [ 'Negative', negativeWords[4],20000],
+          [ 'Positive', positiveWords[0],220000],
+          [ 'Positive', positiveWords[1],20000],
+          [ 'Positive', positiveWords[2],200002],
+          [ 'Positive', positiveWords[3],200002],
+          [ 'Positive', positiveWords[4],20000],
         ]);
 
         // Sets chart options.

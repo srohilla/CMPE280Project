@@ -22,8 +22,11 @@ endpoint = "https://gateway.watsonplatform.net/discovery/api/v1/environments/"+e
 
 @app.route('/')
 def error():
+    return render_template('index.html')
+
+
     
-    return "Please specify a search term in your URL"
+    #return "Please specify a search term in your URL"
 
 @app.route('/newHeadlines', methods=['POST'])
 def newHeadlines():
@@ -205,7 +208,7 @@ def news_page(keyword):
             links.append({'source':count + 1,'target':0})
             count+=1
                    
-    return render_template('cloud.html', nodes=json.dumps(nodes), links=json.dumps(links), bigWords=json.dumps(bigWords), headlines=json.dumps(headlines))
+    return render_template('cluster.html', nodes=json.dumps(nodes), links=json.dumps(links), bigWords=json.dumps(bigWords), headlines=json.dumps(headlines))
 
 
 
@@ -221,37 +224,48 @@ def sankee_test(keyword):
     positiveHeadlines[1][keyword]={}
     negativeHeadlines={}
     negativeHeadlines[1]={}
-    
+    positiveResultSet=0
+    negativeResultSet=0
     negativeHeadlines[1][keyword]={}
 
     bigWords={}
-    
+    positiveKeys=[]
+    negativeKeys=[]
     try:
-        get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:positive&count=50"
+        get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:positive&count=5"
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
-        print response
+        
+        print json.dumps(response ,indent=4 , sort_keys=True)
         for article in response['results']:
-           # positiveLinks[1] = article['url']
             print article['title']
-            positiveHeadlines[1][keyword][article['title']]=article['url']   
-
-
-        get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:negative&count=50"
+            positiveKeys.append(article['title'])
+           # positiveLinks[1] = article['url']
+            #print article['title']
+            #positiveHeadlines[1][keyword][article['title']]=article['url']   
+        positiveResultSet= response['matching_results']
+        print positiveKeys
+        get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:negative&count=5"
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
-        print response
+       # negativeResultSet= response['Matching Results']
+        #print response
         for article in response['results']:
-       #     negativeLinks[1] = article['url']
-            print article['title']     
-            negativeHeadlines[1][keyword][article['title']]=article['url'] 
+            print article['title']
+            negativeKeys.append(article['title'])
 
+        negativeResultSet= response['matching_results']
+       #     negativeLinks[1] = article['url']
+           # print article['title']     
+           # negativeHeadlines[1][keyword][article['title']]=article['url'] 
+           # negativeHeadlines[1][keyword][article['title']]=article['title']
+           # print negativeHeadlines[1][keyword][article['title']]
             
 
     except Exception as e:
         print e
 
-    return render_template('test.html', key= keyword, negativeLinks=json.dumps(negativeHeadlines), positiveLinks=json.dumps(positiveHeadlines))
+    return render_template('graph.html', key= keyword, negativeLinks=json.dumps(negativeKeys), positiveLinks=json.dumps(positiveKeys), positiveResultSet= positiveResultSet, negativeResultSet=negativeResultSet)
 
 port = os.getenv('VCAP_APP_PORT', '8000')
 
