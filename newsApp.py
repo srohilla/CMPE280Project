@@ -265,7 +265,7 @@ def sankee_test(keyword):
     except Exception as e:
         print e
 
-    return render_template('graph.html', key= keyword, negativeLinks=json.dumps(negativeKeys), positiveLinks=json.dumps(positiveKeys), positiveResultSet= positiveResultSet, negativeResultSet=negativeResultSet)
+    return render_template('sankeyGraph.html', key= keyword, negativeLinks=json.dumps(negativeKeys), positiveLinks=json.dumps(positiveKeys), positiveResultSet= positiveResultSet, negativeResultSet=negativeResultSet)
 
 port = os.getenv('VCAP_APP_PORT', '8000')
 
