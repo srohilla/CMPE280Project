@@ -159,8 +159,9 @@ def favicon():
    return ""
 
 
-@app.route('/<keyword>')
-def news_page(keyword):
+@app.route('/', methods=['POST'])
+def news_page():
+    keyword = request.form['not']
     index=0
     nodes=[]
     links=[]
@@ -211,11 +212,16 @@ def news_page(keyword):
     return render_template('cluster.html', nodes=json.dumps(nodes), links=json.dumps(links), bigWords=json.dumps(bigWords), headlines=json.dumps(headlines))
 
 
+@app.route('/trend_analysis', methods=['POST'])
+def trend_analysis():
+    trend = request.form['trend']
+    return render_template("trend.html")
 
 
 
-@app.route('/test/<keyword>')
-def sankee_test(keyword):
+@app.route('/sankey_display', methods=['POST'])
+def sankee_test():
+    keyword = request.form['sankey']
     index=0 
     headlines={}
     headlines[1]={}
