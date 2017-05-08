@@ -6,44 +6,18 @@
       google.charts.setOnLoadCallback(drawChart);
       
       function drawChart() {
-        var key ='{{key}}';
-        var positiveWords = {{ positiveLinks|safe }};
-        var negativeWords = {{ negativeLinks|safe }};
-        var positiveCount={{positiveResultSet}};
-        var negativeCount={{negativeResultSet}};
-       
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'From');
-        data.addColumn('string', 'To');
-        data.addColumn('number', 'Weight');
-        data.addRows([
-          [ key, 'Positive',positiveCount],
-          [ key, 'Negative',negativeCount],
-          [ 'Negative', negativeWords[0],20000],
-          [ 'Negative', negativeWords[1],20000],
-          [ 'Negative', negativeWords[2],20000],
-          [ 'Negative', negativeWords[3],20000],
-          [ 'Negative', negativeWords[4],20000],
-          [ 'Positive', positiveWords[0],220000],
-          [ 'Positive', positiveWords[1],20000],
-          [ 'Positive', positiveWords[2],200002],
-          [ 'Positive', positiveWords[3],200002],
-          [ 'Positive', positiveWords[4],20000],
-        ]);
+        var recommendationList = {{ recommendationList|safe }};
+        var keyword = "{{keyword}}";
+     
+        for(var c in recommendationList[1][keyword]){
+          console.log(c);
+          console.log(recommendationList[1][keyword][c]);
 
-        // Sets chart options.
-        var options = {
-          width: 600,
-        };
-
-        // Instantiates and draws our chart, passing in some options.
-        var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
-        chart.draw(data, options);
+        }
       }
     </script>
   </head>
   <body>
-   
-    <div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+    
   </body>
 </html>

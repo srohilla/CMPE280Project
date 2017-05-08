@@ -9,10 +9,6 @@ from flask import Flask, request, session, g, redirect, url_for, \
 
 app = Flask(__name__)
 
-#username = os.environ.get('USERNAME', None)
-#password = os.environ.get('PASSWORD', None)
-#environment_id = os.environ.get('ENVIRONMENT_ID', None)
-#collection_id = os.environ.get('COLLECTION_ID', None)
 
 username= '0c3342f7-4594-4967-baea-0e66b2e25bd4'
 password='bzn6Qb1fFDkq'
@@ -188,7 +184,7 @@ def news_page():
         get_url = endpoint+"query=title:\""+keyword+"\"&aggregation=nested(enrichedTitle.entities).filter(enrichedTitle.entities.type:Person).term(enrichedTitle.entities.text,count:100)&count=0"
         results = requests.get(url=get_url, auth=(username, password)) 
         response=results.json()
-
+        print json.dumps(response ,indent=4 , sort_keys=True)
         #add to bigWords
         wordList = []
         for kword in response['aggregations'][0]['aggregations'][0]['aggregations'][0]['results']:
@@ -237,6 +233,22 @@ def sankee_test():
     bigWords={}
     positiveKeys=[]
     negativeKeys=[]
+
+    try:
+        get_url = endpoint+"query=text:\""+keyword+"\"&aggregation=nested(enrichedTitle.entities).filter(enrichedTitle.entities.type:Person).term(enrichedTitle.entities.text,count:100)&count=0"
+        
+        results = requests.get(url=get_url, auth=(username, password)) 
+        response=results.json()
+
+        #add to bigWords
+        wordList = []
+        for kword in response['aggregations'][0]['aggregations'][0]['aggregations'][0]['results']:
+            wordList.append(kword['key'])
+        bigWords[keyword]={'wordList':wordList,'expand':1}   
+    except Exception as e:
+        print e
+
+
     try:
         get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:positive&count=5"
         results = requests.get(url=get_url, auth=(username, password)) 
@@ -272,6 +284,48 @@ def sankee_test():
         print e
 
     return render_template('sankeyGraph.html', key= keyword, negativeLinks=json.dumps(negativeKeys), positiveLinks=json.dumps(positiveKeys), positiveResultSet= positiveResultSet, negativeResultSet=negativeResultSet)
+
+
+
+
+
+@app.route('/recommendation/<keyword>')
+def readerRecommendationEngine(keyword):
+
+    recommendationList={}
+    recommendationList[1]={}
+    recommendationList[1][keyword]={}
+    headlines={}
+    headlines[1]={}
+    headlines[1][keyword]={}
+    
+    try:
+        get_url = endpoint+"query=title:("+keyword+")|enrichedTitle.entities.text:("+keyword+")&count=50&return=author,url"
+        
+        results = requests.get(url=get_url, auth=(username, password)) 
+        response = results.json()
+       
+        print json.dumps(response ,indent=4 , sort_keys=True)
+        for article in response['results']:
+            print article['url']
+           
+            recommendationList[1][keyword][article['author']]=article['url'] 
+            print recommendationList[1][keyword][article['author']]
+            
+       # for article in response['results']:
+
+           # print article
+         #   positiveKeys.append(article['title'])
+         #   recommendationList[1][keyword][article['author']]=article['url']   
+         #   print recommendationList[1][keyword][article['author']]
+    except Exception as e:
+        print e
+
+    return render_template('test.html', keyword = keyword,recommendationList=json.dumps(recommendationList))
+
+
+
+
 
 port = os.getenv('VCAP_APP_PORT', '8000')
 
