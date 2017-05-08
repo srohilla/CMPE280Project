@@ -96,7 +96,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.html">Garvis</a>
+                <a class="navbar-brand" href="/">Garvis</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -282,8 +282,15 @@
                             <hr class="star-primary">
                             <img src="{{ url_for('static', filename='img/portfolio/cabin.png')}}" class="img-responsive img-centered" alt="">
                             <p>This is Network of Things. It takes one query and keeps on generating dynamic collapsible force layout graphs. And it has element of surprise for you. Very useful for researchers for relevancy indexing, news aggregation.</p>
+                            <div class="form-group">
+                            <form action ="." method="POST">
+                            <label for="not">Insert your keyword:</label>
+                                <input type="text" class="form-control" id="not" name="not" required>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            </form>
+                            </div>
                             
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
@@ -302,12 +309,22 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+
+                            <h2>Bibilophile's guide</h2>
+
                             <hr class="star-primary">
                             <img src="{{ url_for('static', filename='img/portfolio/cake.png')}}" class="img-responsive img-centered" alt="">
+                             <p>This is reading reccomendation engine</p>
+                           <form action ="./trend_analysis" method="POST">
+                            <label for="trend">Insert your keyword:</label>
+                                <input type="text" class="form-control" id="trend" name="trend">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            </form>
+                            </div>
                            
                             
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            
                         </div>
                     </div>
                 </div>
@@ -329,9 +346,16 @@
                             <h2>Sentiment Sankey</h2>
                             <hr class="star-primary">
                             <img src="{{ url_for('static', filename='img/portfolio/circus.png')}}" class="img-responsive img-centered" alt="">
-                            <p>It is very good with sankey charts which tells you about</p>
+                            <p>Understand your market with the caluclated sentiments.</p>
+                              <div class="form-group">
+                            <form action ="./sankey_display" method="POST">
+                            <label for="not">Insert your keyword:</label>
+                                <input type="text" class="form-control" id="sankey" name="sankey">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            </form>
+                            </div>
                             
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
