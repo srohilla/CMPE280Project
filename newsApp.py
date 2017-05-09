@@ -3,10 +3,12 @@ import sys
 import os
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, json, jsonify
+import redis
 
 
 
 
+conn = redis.Redis('localhost')
 app = Flask(__name__)
 
 
@@ -15,7 +17,7 @@ password='bzn6Qb1fFDkq'
 environment_id='32a11c6d-26fc-497a-a25e-b18e618e951e'
 collection_id='c8566c56-d55f-414d-a9a7-a5b3668673fd'
 endpoint = "https://gateway.watsonplatform.net/discovery/api/v1/environments/"+environment_id+"/collections/"+collection_id+"/query?version=2016-12-01&"
-
+trend_data =[]
 @app.route('/')
 def error():
     return render_template('index.html')
@@ -158,6 +160,10 @@ def favicon():
 @app.route('/', methods=['POST'])
 def news_page():
     keyword = request.form['not']
+    value =conn.get(keyword)
+    conn.hset("NoT",keyword, 0) if value is None else conn.hset("NoT",keyword, int(value)+1)
+    b = conn.hgetall("NoT")
+    trend_data.append(b)
     index=0
     nodes=[]
     links=[]
@@ -171,7 +177,7 @@ def news_page():
         get_url = endpoint+"query=title:("+keyword+")|enrichedTitle.entities.text:("+keyword+")&count=50&return=title,url"
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
-        print response
+        #print response
         for article in response['results']:
             print article['url']
             headlines[1][keyword][article['title']]=article['url'] 
@@ -211,13 +217,18 @@ def news_page():
 @app.route('/trend_analysis', methods=['POST'])
 def trend_analysis():
     trend = request.form['trend']
-    return render_template("trend.html")
+    return render_template("trend.html", trenddata=json.dumps(trend_data))
 
 
 
 @app.route('/sankey_display', methods=['POST'])
 def sankee_test():
     keyword = request.form['sankey']
+
+    value =conn.get(keyword)
+    conn.hset("sankey",keyword, 0) if value is None else conn.hset("sankey",keyword, int(value)+1)
+    s = conn.hgetall("sankey")
+    trend_data.append(s)
     index=0 
     headlines={}
     headlines[1]={}
