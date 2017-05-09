@@ -161,7 +161,7 @@ def favicon():
 def news_page():
     keyword = request.form['not']
     value =conn.get(keyword)
-    conn.hset("NoT",keyword, 0) if value is None else conn.hset("NoT",keyword, int(value)+1)
+    conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
     b = conn.hgetall("NoT")
     trend_data.append(b)
     index=0
@@ -226,7 +226,7 @@ def sankee_test():
     keyword = request.form['sankey']
 
     value =conn.get(keyword)
-    conn.hset("sankey",keyword, 0) if value is None else conn.hset("sankey",keyword, int(value)+1)
+    conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
     s = conn.hgetall("sankey")
     trend_data.append(s)
     index=0 
