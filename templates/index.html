@@ -56,9 +56,9 @@
 
 
     </style>
-    <link href="profile.css" rel="stylesheet"></style>
+    <!-- <link href="profile.css" rel="stylesheet"></style> -->
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" />
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" />
@@ -316,9 +316,9 @@
                             <img src="{{ url_for('static', filename='img/portfolio/cake.png')}}" class="img-responsive img-centered" alt="">
                              <p>We use beautiful cache (REDIS) to empower our search</p>
                            <form action ="./trend_analysis" method="POST">
-                            <label for="trend">Insert your keyword:</label>
-                                <input type="text" class="form-control" id="trend" name="trend">
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <input type="hidden" name="trend" id="trend" value="trend">
+  
+                                <button type="submit" class="btn btn-default">Check out</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                             </form>
                             </div>

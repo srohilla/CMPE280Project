@@ -160,10 +160,14 @@ def favicon():
 @app.route('/', methods=['POST'])
 def news_page():
     keyword = request.form['not']
-    value =conn.get(keyword)
+    value =conn.hget("NoT",keyword)
+    print value
     conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
-    b = conn.hgetall("NoT")
-    trend_data.append(b)
+    #b = conn.hgetall("NoT")
+    #print "heloooooooo%s" %b 
+
+
+    #trend_data.append(b)
     index=0
     nodes=[]
     links=[]
@@ -217,18 +221,35 @@ def news_page():
 @app.route('/trend_analysis', methods=['POST'])
 def trend_analysis():
     trend = request.form['trend']
+    trend_data = conn.hgetall("sankey")
+    trend_data.update(conn.hgetall("NoT"))
+    print trend_data
     return render_template("trend.html", trenddata=json.dumps(trend_data))
 
+@app.route('/bars', methods=['GET'])
+def bars():
+    return render_template("bars.html", trenddata=json.dumps(trend_data))
+
+
+@app.route('/trend_analysis1', methods=['GET'])
+def trend_analysis1():
+    #trend = request.form['trend']
+    trend_data = conn.hgetall("sankey")
+    trend_data.update(conn.hgetall("NoT"))
+    print trend_data
+    return render_template("trend.html", trenddata=json.dumps(trend_data))
 
 
 @app.route('/sankey_display', methods=['POST'])
 def sankee_test():
     keyword = request.form['sankey']
 
-    value =conn.get(keyword)
+    value =conn.hget("sankey", keyword)
+    print value
     conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
-    s = conn.hgetall("sankey")
-    trend_data.append(s)
+    #s = conn.hgetall("sankey")
+    #print "heloooooooo%s" %s 
+    #trend_data.append(s)
     index=0 
     headlines={}
     headlines[1]={}
