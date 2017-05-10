@@ -12,10 +12,11 @@ conn = redis.Redis('localhost')
 app = Flask(__name__)
 
 
-username= '0c3342f7-4594-4967-baea-0e66b2e25bd4'
-password='bzn6Qb1fFDkq'
-environment_id='32a11c6d-26fc-497a-a25e-b18e618e951e'
-collection_id='c8566c56-d55f-414d-a9a7-a5b3668673fd'
+
+username= '270bebed-7ee0-4162-ab2a-855549da1df7'
+password='TVAYbL77UMI8'
+environment_id='ef696d44-b522-4ca5-bd55-8075c10d07b2'
+collection_id='676534c5-fbd7-441c-97be-83c82cc21758'
 endpoint = "https://gateway.watsonplatform.net/discovery/api/v1/environments/"+environment_id+"/collections/"+collection_id+"/query?version=2016-12-01&"
 trend_data =[]
 @app.route('/')
@@ -160,10 +161,14 @@ def favicon():
 @app.route('/', methods=['POST'])
 def news_page():
     keyword = request.form['not']
-    value =conn.get(keyword)
+    value =conn.hget("NoT",keyword)
+    print value
     conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
-    b = conn.hgetall("NoT")
-    trend_data.append(b)
+    #b = conn.hgetall("NoT")
+    #print "heloooooooo%s" %b 
+
+
+    #trend_data.append(b)
     index=0
     nodes=[]
     links=[]
@@ -217,18 +222,35 @@ def news_page():
 @app.route('/trend_analysis', methods=['POST'])
 def trend_analysis():
     trend = request.form['trend']
+    trend_data = conn.hgetall("sankey")
+    trend_data.update(conn.hgetall("NoT"))
+    print trend_data
     return render_template("trend.html", trenddata=json.dumps(trend_data))
 
+@app.route('/bars', methods=['GET'])
+def bars():
+    return render_template("bars.html", trenddata=json.dumps(trend_data))
+
+
+@app.route('/trend_analysis1', methods=['GET'])
+def trend_analysis1():
+    #trend = request.form['trend']
+    trend_data = conn.hgetall("sankey")
+    trend_data.update(conn.hgetall("NoT"))
+    print trend_data
+    return render_template("trend.html", trenddata=json.dumps(trend_data))
 
 
 @app.route('/sankey_display', methods=['POST'])
 def sankee_test():
     keyword = request.form['sankey']
 
-    value =conn.get(keyword)
+    value =conn.hget("sankey", keyword)
+    print value
     conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
-    s = conn.hgetall("sankey")
-    trend_data.append(s)
+    #s = conn.hgetall("sankey")
+    #print "heloooooooo%s" %s 
+    #trend_data.append(s)
     index=0 
     headlines={}
     headlines[1]={}
@@ -300,9 +322,9 @@ def sankee_test():
 
 
 
-@app.route('/recommendation/<keyword>')
-def readerRecommendationEngine(keyword):
-
+@app.route('/recommendation', methods=['POST'])
+def readerRecommendationEngine():
+    keyword = request.form['reco']
     recommendationList={}
     recommendationList[1]={}
     recommendationList[1][keyword]={}
@@ -312,17 +334,65 @@ def readerRecommendationEngine(keyword):
     
     try:
         get_url = endpoint+"query=title:("+keyword+")|enrichedTitle.entities.text:("+keyword+")&count=50&return=author,url"
+
         
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
        
         print json.dumps(response ,indent=4 , sort_keys=True)
         for article in response['results']:
-            print article['url']
-           
+
             recommendationList[1][keyword][article['author']]=article['url'] 
             print recommendationList[1][keyword][article['author']]
+
+        for article in response['results']:
             
+            if(article['author']==""):
+                article['author']='unknown'
+                continue
+                
+
+              
+            print(article['author'])    
+            if authorDict.has_key(article['author']):
+                print("****************************************")
+               # print("authorname :"+article['author'])
+                
+               # urllist=authorDict[article['author']]
+             #   print(urllist)
+                url=[]
+                url.append(article['url'])
+                #newList=urllist.append(article['url'])
+                authorDict[article['author']]=url
+                
+            else:
+                # 
+                # if(article['author']==""):
+                #     print("in here")
+                #     authorDict["unknown"]=[article['url']]
+                # else:
+                print("--------------------------------------")
+                url=[]
+                url.append(article['url'])
+                authorDict[article['author']]=url
+        for key, value in authorDict.items():
+            test=[{"name":value[0],"size":2233}]
+            authornamedict={"name":key, "children":test}
+            authorList.append(authornamedict)
+        
+        completedict={"name":keyword,"children":authorList}
+        #print(json.dumps(completedict))
+        file = open("./static/recommend.json","w") 
+ 
+        file.write(json.dumps(completedict))
+
+
+
+        print article['url']
+           
+        recommendationList[1][keyword][article['author']]=article['url'] 
+        print recommendationList[1][keyword][article['author']]
+
        # for article in response['results']:
 
            # print article
@@ -332,8 +402,8 @@ def readerRecommendationEngine(keyword):
     except Exception as e:
         print e
 
-    return render_template('test.html', keyword = keyword,recommendationList=json.dumps(recommendationList))
 
+    return render_template('test_recommend.html')
 
 
 
