@@ -88,11 +88,15 @@
       
       function drawChart() {
         var key ='{{key}}';
-        var positiveWords = {{ positiveLinks|safe }};
-        var negativeWords = {{ negativeLinks|safe }};
+        var positiveWords = {{ positiveWords|safe }};
+        var negativeWords = {{ negativeWords|safe }};
         var positiveCount={{positiveResultSet}};
         var negativeCount={{negativeResultSet}};
-       
+        var positiveLinkList={{ positiveLinksList|safe }};
+        var negativeLinkList={{ negativeLinksList|safe }};
+        console.log(negativeLinkList)
+        console.log(positiveLinkList)
+
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'From');
         data.addColumn('string', 'To');
@@ -120,6 +124,35 @@
         // Instantiates and draws our chart, passing in some options.
         var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
         chart.draw(data, options);
+        // var a = document.createElement("a");
+      
+        // var newItem = document.createElement("li");
+
+        // a.textContent = "...ooo";
+        // a.setAttribute('href', "http://www.msn.com");
+        // newItem.appendChild(a);
+        // ulist.appendChild(newItem);
+        var ul = document.getElementById("list");
+        
+       for (i = 0; i < positiveLinkList.length; i++) { 
+           var a = document.createElement("a");
+           a.textContent = positiveLinkList[i];
+           a.setAttribute('href',positiveLinkList[i]);
+            var li = document.createElement("li");
+            li.appendChild(a);
+            ul.appendChild(li);
+          } 
+
+         var ul1= document.getElementById("list1");
+         for (j = 0; j < negativeLinkList.length; j++) { 
+            var a = document.createElement("a");
+            a.textContent = negativeLinkList[j];
+            a.setAttribute('href',negativeLinkList[j]);
+            var li1 = document.createElement("li");
+            li1.appendChild(a);
+            ul1.appendChild(li1);
+          }    
+        
       }
     </script>
 </head>
@@ -178,9 +211,23 @@
     <section id="about">
         <div id="container">
             <div class="col-sm-6" >
-               <h2 align="center"> <i class="fa fa-smile-o"></i></h2>
+               <h2 align="center"> <i class="fa fa-smile-o"></i>  </h2>
+               <h7>
+                <ul id="list">
+                   
+                </ul>
+               </h7>
+             
             </div>
-            <div class="col-sm-6" ><h2 align="center"><i class="fa fa-frown-o"></i></h2></div>
+            <div class="col-sm-6" ><h2 align="center">
+            <i class="fa fa-frown-o"></i></h2>
+            <h7>
+                <ul id="list1">
+                   
+                </ul>
+               </h7>
+            
+            </div>
         </div>
     </section>
     
