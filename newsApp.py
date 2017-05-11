@@ -161,13 +161,11 @@ def favicon():
 @app.route('/', methods=['POST'])
 def news_page():
     keyword = request.form['not']
-    value =conn.hget("NoT",keyword)
-    print value
-    conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
+   # value =conn.hget("NoT",keyword)
+   # print value
+   # conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
     #b = conn.hgetall("NoT")
     #print "heloooooooo%s" %b 
-
-
     #trend_data.append(b)
     index=0
     nodes=[]
@@ -245,9 +243,9 @@ def trend_analysis1():
 def sankee_test():
     keyword = request.form['sankey']
 
-    value =conn.hget("sankey", keyword)
-    print value
-    conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
+   # value =conn.hget("sankey", keyword)
+   # print value
+  #  conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
     #s = conn.hgetall("sankey")
     #print "heloooooooo%s" %s 
     #trend_data.append(s)
@@ -262,7 +260,8 @@ def sankee_test():
     positiveResultSet=0
     negativeResultSet=0
     negativeHeadlines[1][keyword]={}
-
+    positiveLinks=[]
+    negativeLinks=[]
     bigWords={}
     positiveKeys=[]
     negativeKeys=[]
@@ -289,36 +288,32 @@ def sankee_test():
         
         print json.dumps(response ,indent=4 , sort_keys=True)
         for article in response['results']:
-            print article['title']
+         #   print article['title']
             positiveKeys.append(article['title'])
+            positiveLinks.append(article['url'])
            # positiveLinks[1] = article['url']
             #print article['title']
             #positiveHeadlines[1][keyword][article['title']]=article['url']   
         positiveResultSet= response['matching_results']
-        print positiveKeys
+      #  print positiveKeys
         get_url = endpoint+"query=title:("+keyword+")|docSentiment.type:negative&count=5"
         results = requests.get(url=get_url, auth=(username, password)) 
         response = results.json()
        # negativeResultSet= response['Matching Results']
         #print response
         for article in response['results']:
-            print article['title']
+           # print article['title']
             negativeKeys.append(article['title'])
+            negativeLinks.append(article['url'])
 
         negativeResultSet= response['matching_results']
-       #     negativeLinks[1] = article['url']
-           # print article['title']     
-           # negativeHeadlines[1][keyword][article['title']]=article['url'] 
-           # negativeHeadlines[1][keyword][article['title']]=article['title']
-           # print negativeHeadlines[1][keyword][article['title']]
+        print negativeLinks
             
 
     except Exception as e:
         print e
 
-    return render_template('sankeyGraph.html', key= keyword, negativeLinks=json.dumps(negativeKeys), positiveLinks=json.dumps(positiveKeys), positiveResultSet= positiveResultSet, negativeResultSet=negativeResultSet)
-
-
+    return render_template('sankeyGraph.html', key= keyword, negativeWords=json.dumps(negativeKeys), positiveWords=json.dumps(positiveKeys), positiveResultSet= positiveResultSet, negativeResultSet=negativeResultSet,positiveLinksList=json.dumps(positiveLinks),negativeLinksList=json.dumps(negativeLinks))
 
 
 
@@ -328,9 +323,11 @@ def readerRecommendationEngine():
     recommendationList={}
     recommendationList[1]={}
     recommendationList[1][keyword]={}
-    headlines={}
-    headlines[1]={}
-    headlines[1][keyword]={}
+    authorDict={}
+    authornamedict={}
+    completedict={}
+    authorList=[]
+
     
     try:
         get_url = endpoint+"query=title:("+keyword+")|enrichedTitle.entities.text:("+keyword+")&count=50&return=author,url"
@@ -355,55 +352,40 @@ def readerRecommendationEngine():
               
             print(article['author'])    
             if authorDict.has_key(article['author']):
-                print("****************************************")
-               # print("authorname :"+article['author'])
-                
-               # urllist=authorDict[article['author']]
-             #   print(urllist)
                 url=[]
+                url=authorDict[article['author']]
                 url.append(article['url'])
                 #newList=urllist.append(article['url'])
                 authorDict[article['author']]=url
                 
             else:
-                # 
-                # if(article['author']==""):
-                #     print("in here")
-                #     authorDict["unknown"]=[article['url']]
-                # else:
-                print("--------------------------------------")
+
                 url=[]
                 url.append(article['url'])
                 authorDict[article['author']]=url
+                
         for key, value in authorDict.items():
-            test=[{"name":value[0],"size":2233}]
-            authornamedict={"name":key, "children":test}
+            readList=[]
+            for i in value:
+                readDictionary={"name":i,"size":2233}
+                readList.append(readDictionary)
+                #print readList
+
+            authornamedict={"name":key, "children":readList}
+           
             authorList.append(authornamedict)
-        
+           # del readList[:]
+        print authorList
         completedict={"name":keyword,"children":authorList}
         #print(json.dumps(completedict))
-        file = open("./static/recommend.json","w") 
- 
+        file = open("./static/recommendList.json","w") 
         file.write(json.dumps(completedict))
 
-
-
-        print article['url']
-           
-        recommendationList[1][keyword][article['author']]=article['url'] 
-        print recommendationList[1][keyword][article['author']]
-
-       # for article in response['results']:
-
-           # print article
-         #   positiveKeys.append(article['title'])
-         #   recommendationList[1][keyword][article['author']]=article['url']   
-         #   print recommendationList[1][keyword][article['author']]
     except Exception as e:
         print e
 
 
-    return render_template('test_recommend.html')
+    return render_template('recommendGraph.html')
 
 
 

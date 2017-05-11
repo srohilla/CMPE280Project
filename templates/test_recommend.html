@@ -47,7 +47,8 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("{{ url_for('static', filename='recommend.json')}}", function(error, flare) {
+var noCache = new Date().getTime();
+d3.json("{{ url_for('static', filename='recommendList.json')}}"+"?_=" + noCache, function(error, flare) {
   if (error) throw error;
   
   root = flare;

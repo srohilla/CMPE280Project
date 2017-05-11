@@ -151,6 +151,7 @@ var links = {{ links|safe }};
 var svg = d3.select(".graph").append("svg")
     .attr("width", width)
     .attr("height", height);
+   
 
 var link = svg.selectAll(".link");
 var node = svg.selectAll(".node");

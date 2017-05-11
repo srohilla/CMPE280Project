@@ -157,7 +157,7 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/cabin.png')}}" class="img-responsive" alt="Cabin">
+                        <img src="{{ url_for('static', filename='img/portfolio/cabin1.png')}}" class="img-responsive" alt="Cabin" >
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item">
@@ -167,7 +167,7 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/cake.png')}}" class="img-responsive" alt="Slice of cake">
+                        <img src="{{ url_for('static', filename='img/portfolio/cake1.png')}}" class="img-responsive" alt="Slice of cake">
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item">
@@ -177,40 +177,53 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/circus.png')}}" class="img-responsive" alt="Circus tent">
+                        <img src="{{ url_for('static', filename='img/portfolio/circus1.png')}}" class="img-responsive" alt="Circus tent">
                     </a>
                 </div>
+                <div class="col-sm-4 portfolio-item">
+                   <a href="">
+                        <div class="caption">
+                            <div class="caption-content">
+                               
+                            </div>
+                        </div>
+                        <img>
+                    </a>
+                </div> 
+                               <div class="col-sm-4 portfolio-item">
+                   <a href="">
+                        <div class="caption">
+                            <div class="caption-content">
+                                
+                            </div>
+                        </div>
+                        <img>
+                    </a>
+                </div> 
                 <div class="col-sm-4 portfolio-item">
                     <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
+                        <div class="caption" style="height:206.02">
                             <div class="caption-content">
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/game.png')}}" class="img-responsive" alt="Game controller">
+                        <img src="{{ url_for('static', filename='img/portfolio/game1.png')}}" class="img-responsive" alt="Game controller">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
+               <div class="col-sm-4 portfolio-item">
+                   <a href="">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                
                             </div>
                         </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/safe.png')}}" class="img-responsive" alt="Safe">
+                        <img>
                     </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/submarine.png')}}" class="img-responsive" alt="Submarine">
-                 
-                    </a>
-                </div>
+                </div> 
+
+                
+
+
             </div>
         </div>
     </section>
@@ -301,7 +314,7 @@
                         <div class="modal-body">
                             <h2>NoT</h2>
                             <hr class="star-primary">
-                            <img src="{{ url_for('static', filename='img/portfolio/cabin.png')}}" class="img-responsive img-centered" alt="">
+                            <img src="{{ url_for('static', filename='img/portfolio/cabin1.png')}}" class="img-responsive img-centered" alt="">
                             <p>This is Network of Things. It takes one query and keeps on generating dynamic collapsible force layout graphs. And it has element of surprise for you. Very useful for researchers for relevancy indexing, news aggregation.</p>
                             <div class="form-group">
                             <form action ="." method="POST">
@@ -334,7 +347,7 @@
                             <h2>Trend Analysis</h2>
 
                             <hr class="star-primary">
-                            <img src="{{ url_for('static', filename='img/portfolio/cake.png')}}" class="img-responsive img-centered" alt="">
+                            <img src="{{ url_for('static', filename='img/portfolio/cake1.png')}}" class="img-responsive img-centered" alt="">
                              <p>We use beautiful cache (REDIS) to empower our search</p>
                            <form action ="./trend_analysis" method="POST">
                                 <input type="hidden" name="trend" id="trend" value="trend">
@@ -366,8 +379,8 @@
                         <div class="modal-body">
                             <h2>Sentiment Sankey</h2>
                             <hr class="star-primary">
-                            <img src="{{ url_for('static', filename='img/portfolio/circus.png')}}" class="img-responsive img-centered" alt="">
-                            <p>Understand your market with the caluclated sentiments.</p>
+                            <img src="{{ url_for('static', filename='img/portfolio/circus1.png')}}" class="img-responsive img-centered" alt="">
+                            <p>Understand your market with the calculated sentiments.</p>
                             <div class="form-group">
                             <form action ="./sankey_display" method="POST">
                             <label for="not">Insert your keyword:</label>
@@ -397,7 +410,7 @@
                         <div class="modal-body">
                             <h2>Bibilophile's guide</h2>
                             <hr class="star-primary">
-                            <img src="{{ url_for('static', filename='img/portfolio/game.png')}}" class="img-responsive img-centered" alt="">
+                            <img src="{{ url_for('static', filename='img/portfolio/game1.png')}}" class="img-responsive img-centered" alt="">
                              <p>This is reading reccomendation engine</p>
                             <form action ="./recommendation" method="POST">
                             <label for="trend">Insert your keyword:</label>
