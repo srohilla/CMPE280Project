@@ -161,13 +161,11 @@ def favicon():
 @app.route('/', methods=['POST'])
 def news_page():
     keyword = request.form['not']
-    value =conn.hget("NoT",keyword)
-    print value
-    conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
+   # value =conn.hget("NoT",keyword)
+   # print value
+   # conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
     #b = conn.hgetall("NoT")
     #print "heloooooooo%s" %b 
-
-
     #trend_data.append(b)
     index=0
     nodes=[]
@@ -245,9 +243,9 @@ def trend_analysis1():
 def sankee_test():
     keyword = request.form['sankey']
 
-    value =conn.hget("sankey", keyword)
-    print value
-    conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
+   # value =conn.hget("sankey", keyword)
+   # print value
+  #  conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
     #s = conn.hgetall("sankey")
     #print "heloooooooo%s" %s 
     #trend_data.append(s)
@@ -354,11 +352,6 @@ def readerRecommendationEngine():
               
             print(article['author'])    
             if authorDict.has_key(article['author']):
-                print("****************************************")
-               # print("authorname :"+article['author'])
-                
-               # urllist=authorDict[article['author']]
-             #   print(urllist)
                 url=[]
                 url=authorDict[article['author']]
                 url.append(article['url'])
@@ -366,38 +359,33 @@ def readerRecommendationEngine():
                 authorDict[article['author']]=url
                 
             else:
-                # 
-                # if(article['author']==""):
-                #     print("in here")
-                #     authorDict["unknown"]=[article['url']]
-                # else:
-                print("--------------------------------------")
+
                 url=[]
                 url.append(article['url'])
                 authorDict[article['author']]=url
-        readList=[]        
+                
         for key, value in authorDict.items():
+            readList=[]
             for i in value:
                 readDictionary={"name":i,"size":2233}
                 readList.append(readDictionary)
+                #print readList
 
             authornamedict={"name":key, "children":readList}
-            print("*******")
-            print readList
-            del readList[:]
+           
             authorList.append(authornamedict)
-        
+           # del readList[:]
+        print authorList
         completedict={"name":keyword,"children":authorList}
         #print(json.dumps(completedict))
         file = open("./static/recommendList.json","w") 
- 
         file.write(json.dumps(completedict))
 
     except Exception as e:
         print e
 
 
-    return render_template('test_recommend.html')
+    return render_template('recommendGraph.html')
 
 
 
