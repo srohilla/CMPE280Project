@@ -1,4 +1,4 @@
-# Gavis
+# Garvis
 Repository For CMPE 280 Project
 
 Garvis -Graph Jarvis is your personal data driven visual assistant. You don't even have to give him data to produce great results. He keeps on gathering data using his own intelligent NLP, ML and Data mining models.
