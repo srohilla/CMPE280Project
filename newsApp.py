@@ -8,7 +8,7 @@ import redis
 
 
 
-conn = redis.Redis('localhost')
+#conn = redis.Redis('localhost')
 app = Flask(__name__)
 
 
@@ -161,12 +161,11 @@ def favicon():
 @app.route('/', methods=['POST'])
 def news_page():
     keyword = request.form['not']
-   # value =conn.hget("NoT",keyword)
+  #  value =conn.hget("NoT",keyword)
    # print value
-   # conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
-    #b = conn.hgetall("NoT")
-    #print "heloooooooo%s" %b 
-    #trend_data.append(b)
+  #  conn.hset("NoT",keyword, 1) if value is None else conn.hset("NoT",keyword, int(value)+1)
+  #  b = conn.hgetall("NoT")
+
     index=0
     nodes=[]
     links=[]
@@ -243,10 +242,10 @@ def trend_analysis1():
 def sankee_test():
     keyword = request.form['sankey']
 
-   # value =conn.hget("sankey", keyword)
-   # print value
-  #  conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
-    #s = conn.hgetall("sankey")
+    value =conn.hget("sankey", keyword)
+    print value
+    conn.hset("sankey",keyword, 1) if value is None else conn.hset("sankey",keyword, int(value)+1)
+    s = conn.hgetall("sankey")
     #print "heloooooooo%s" %s 
     #trend_data.append(s)
     index=0 

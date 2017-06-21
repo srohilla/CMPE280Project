@@ -69,6 +69,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/demo.css') }}" rel="stylesheet">
+     <link href="{{ url_for('static', filename='css/hopscotch.css') }}" rel="stylesheet">
+     <link href="{{ url_for('static', filename='css/hopscotch.min.css') }}" rel="stylesheet">
 
     <script src="{{ url_for('static', filename='js/typed.js') }}"></script>
 
@@ -82,6 +85,11 @@
         });
     });
 </script>
+<style>
+        .goog-te-gadget-icon{
+              display:none;
+            }
+    </style>
 
 </head>
 
@@ -97,6 +105,11 @@
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="/">Garvis</a>
+                <li class="page-scroll"><div id="google_translate_element"></div><script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script></li>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -113,9 +126,12 @@
                     </li>
                     <li class="page-scroll">
                         <a href="#contact">Contributors</a>
+                        
+        
                     </li>
                 </ul>
             </div>
+
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
@@ -127,7 +143,7 @@
         <div class="container" id="maincontent" tabindex="-1">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="{{ url_for('static', filename='img/profile.png')}}" alt="">
+                    <img class="img-responsive" src="{{ url_for('static', filename='img/profile.png')}}" alt="" id="garvis">
                     
                     <div class="intro-text">
                         
@@ -144,23 +160,23 @@
     <section id="portfolio">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
+                  <div id ="world" class="col-lg-12 text-center">
                     <h2>World of Garvis</h2>
                     <hr class="star-primary">
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item" id="graph1">
                     <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="{{ url_for('static', filename='img/portfolio/cabin1.png')}}" class="img-responsive" alt="Cabin" >
+                        <img src="{{ url_for('static', filename='img/portfolio/cabin1.png')}}" class="img-responsive" alt="Cabin">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item" id="graph2">
                     <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
@@ -170,7 +186,7 @@
                         <img src="{{ url_for('static', filename='img/portfolio/cake1.png')}}" class="img-responsive" alt="Slice of cake">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item" id="graph3">
                     <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
@@ -180,29 +196,9 @@
                         <img src="{{ url_for('static', filename='img/portfolio/circus1.png')}}" class="img-responsive" alt="Circus tent">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
-                   <a href="">
-                        <div class="caption">
-                            <div class="caption-content">
-                               
-                            </div>
-                        </div>
-                        <img>
-                    </a>
-                </div> 
-                               <div class="col-sm-4 portfolio-item">
-                   <a href="">
-                        <div class="caption">
-                            <div class="caption-content">
-                                
-                            </div>
-                        </div>
-                        <img>
-                    </a>
-                </div> 
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item" id="graph4">
                     <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption" style="height:206.02">
+                        <div class="caption">
                             <div class="caption-content">
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
@@ -210,22 +206,27 @@
                         <img src="{{ url_for('static', filename='img/portfolio/game1.png')}}" class="img-responsive" alt="Game controller">
                     </a>
                 </div>
-               <div class="col-sm-4 portfolio-item">
-                   <a href="">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                
+                                <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img>
+                       
                     </a>
-                </div> 
-
-                
-
-                
-
-
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        
+                 
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -257,18 +258,18 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
+       <section id="contact">
         <div class="container">
         
     
     <div class="row control-group">
         
-        <div class="col-sm-4 col-md-4 user-details" style="position: absolute; left: 35%">
+        <div class="col-sm-4 col-md-4 user-details" style="position: absolute; left: 35%" id="contributors">
            
             <div style="float:left; padding-right: 30px"><img class="img-responsive" src="{{ url_for('static', filename='img/test.png')}}" alt="Bhushan" height="60px" width="60px"></div>
             <div style="float:left; padding-right: 30px"><img class="img-responsive" src="{{ url_for('static', filename='img/seema.png')}}" alt="Seema" height="60px" width="60px"></div>
             <div style="float:left; padding-right: 30px"><img class="img-responsive" src="{{ url_for('static', filename='img/veeresh1.png')}}" alt="Veeresh" height="60px" width="60px"></div>
-            <div style="float:left;padding-right: 30px"><img class="img-responsive" src="{{ url_for('static', filename='img/veeresh1.png')}}" alt="Bhavika" height="60px" width="60px"></div>
+            <div style="float:left;padding-right: 30px"><img class="img-responsive" src="{{ url_for('static', filename='img/bhavika.png')}}" alt="Bhavika" height="60px" width="60px"></div>
          
         </div>
 
@@ -382,7 +383,7 @@
                             <h2>Sentiment Sankey</h2>
                             <hr class="star-primary">
                             <img src="{{ url_for('static', filename='img/portfolio/circus1.png')}}" class="img-responsive img-centered" alt="">
-                            <p>Understand your market with the calculated sentiments.</p>
+                            <p>Understand your market with the caluclated sentiments.</p>
                             <div class="form-group">
                             <form action ="./sankey_display" method="POST">
                             <label for="not">Insert your keyword:</label>
@@ -492,6 +493,76 @@
     <!-- Theme JavaScript -->
     <script src="{{ url_for('static', filename='js/freelancer.min.js') }}" ></script>
 
+     <script  src="{{ url_for('static', filename='js/hopscotch.min.js') }}"></script>
+
+    <script type="text/javascript">
+        /* globals hopscotch: false */
+
+/* ============ */
+/* EXAMPLE TOUR */
+/* ============ */
+
+
+ // Define the tour!
+    var tour = {
+      id: "world",
+      steps: [
+        {
+          title: "Meet Garvis",
+          content: "The Superhero for all your analytics troubles",
+          target: "garvis",
+          placement: "left"
+        },
+        {
+          title: "Multi-Linguistic",
+          content: "Perform Analysis in Whatever Language you want",
+          target: "google_translate_element",
+          placement: "bottom"
+        },
+        {
+          title: "NoT",
+          content: "This is Network of Things. It takes one query and keeps on generating dynamic collapsible force layout graphs.",
+          target: "graph1",
+          placement: "bottom"
+        },
+        
+        {
+          title: "Trend Analysis",
+          content: "We use beautiful cache (REDIS) to empower our search",
+          target: "graph2",
+          placement: "bottom"
+        },
+        {
+          title: "Sentimental Sankey",
+          content: "Understand your market with the caluclated sentiments.",
+          target: "graph3",
+          placement: "bottom"
+        },
+        {
+          title: "Bibilophile's guide",
+          content: "This is reading reccomendation engine",
+          target: "graph4",
+          placement: "bottom"
+        },
+        {
+          title: "Contributors",
+          content: "Meet the creators of Garvis !",
+          target: "contributors",
+          placement: "top"
+        }
+        
+
+      ],
+          showPrevButton: true,
+  scrollTopMargin: 100
+    };
+
+    // Start the tour!
+    hopscotch.startTour(tour);
+
+
+
+    </script>
 </body>
 
 </html>
